@@ -1,0 +1,35 @@
+[
+  {
+    "name": "id",
+    "title": "ID"
+  },
+  {
+    "name": "ms_name",
+    "title": "机器名称"
+  },
+  {
+    "name": "ms_desc",
+    "title": "机器描述"
+  },
+  {
+    "name": "ms_type",
+    "title": "机器类型",
+    "filterable": false
+  },
+  {
+    "name": "ms_intranet_list",
+    "title": "内网IP列表"
+  },
+  {
+    "name": "ms_outernet_list",
+    "title": "外面IP列表"
+  },
+  {
+    "name": "ms_port_list",
+    "title": "机器使用端口"
+  },
+  {
+    "name": "ms_open_port_list",
+    "title": "机器开放端口"
+  }
+]

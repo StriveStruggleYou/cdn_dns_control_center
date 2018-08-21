@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script src="js/jquery.min.js?v=2.1.4"></script>
+
+
+<script>
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8080/xxl-sso-server/app/login?username=chen&password=111",
+        beforeSend: function(request) {
+            var storage=window.localStorage;
+            request.setRequestHeader("session", storage.getItem("session"));
+        },
+        success: function(result) {
+            alert(result);
+        }
+    });
+
+</script>
+</html>

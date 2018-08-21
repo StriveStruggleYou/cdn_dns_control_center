@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - FooTable</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!--<link href="css/plugins/footable/footable.core.css" rel="stylesheet">-->
+    <link href="css/plugins/footable/footable.bootstrap.css" rel="stylesheet">
+
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>机器列表展示信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <table class="table" id="tables-name" data-paging="true" data-editing-add-text="New row"
+                           data-editing-allow-edit="true"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- Modal -->
+
+<div class="modal fade" id="editor-modal" tabindex="-1" role="dialog" aria-labelledby="editor-title">
+    <style scoped>
+        /* provides a red astrix to denote required fields */
+        .form-group.required .control-label:after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+    </style>
+    <div class="modal-dialog" role="document">
+        <form class="modal-content form-horizontal" id="editor">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editor-title">Add Row</h4>
+            </div>
+            <div class="modal-body">
+                <input type="number" id="id" name="id" class="hidden"/>
+                <div class="form-group required">
+                    <label for="msType" class="col-sm-3 control-label">机器类型</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="msType" name="msType"
+                               placeholder="机器类型" required>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="msName" class="col-sm-3 control-label">机器名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="msName" name="msName"
+                               placeholder="Last Name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="msDesc" class="col-sm-3 control-label">机器描述</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="msDesc" name="msDesc"
+                               placeholder="机器描述">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="msIntranetList" class="col-sm-3 control-label">内网IP列表</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="msIntranetList" name="msIntranetList"
+                               placeholder="Started On" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="msOuternetList" class="col-sm-3 control-label">外网IP列表</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="msOuternetList" name="msOuternetList"
+                               placeholder="Date of Birth">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="js/plugins/footable/footable.all.min.js"></script>-->
+
+<script src="js/plugins/footable/footable.min.js"></script>
+
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+
+        var $modal = $('#editor-modal');
+        var $editor = $('#editor');
+        var $editorTitle = $('#editor-title');
+
+        $('#tables-name').footable({
+            uid: 10,
+            "editing": {
+                enabled: true,
+                addRow: function () {
+                    $modal.removeData('row');
+                    $editor[0].reset();
+                    $editorTitle.text('Add a new row');
+                    $modal.modal('show');
+                },
+                deleteRow: function (row) {
+                    console.log(row); // John
+                    if (confirm('Are you sure you want to delete the row?')) {
+                        $.post("/machine/server/delete", {id: row.value.id}, function (data) {
+                            console.log(data); // John
+                            row.delete();
+                        });
+                    }
+                },
+                editRow: function (row) {
+                    var values = row.val();
+                    $editor.find('#id').val(values.id);
+                    $editor.find('#msType').val(values.msType);
+                    $editor.find('#msName').val(values.msName);
+                    $editor.find('#msDesc').val(values.msDesc);
+                    $modal.data('row', row);
+                    $editorTitle.text('Edit row #' + values.id);
+                    $modal.modal('show');
+                }
+            },
+            "columns": $.post('/machine/path/columns_json'),
+            "rows": $.post('/machine/path/rows_json')
+
+        });
+
+
+        $editor.on('submit', function (e) {
+            if (this.checkValidity && !this.checkValidity()) return;
+            e.preventDefault();
+            var row = $modal.data('row');
+            var values = {
+                id: $editor.find('#id').val(),
+                msType: $editor.find('#msType').val(),
+                msName: $editor.find('#msName').val(),
+                msDesc: $editor.find('#msDesc').val()
+            };
+
+
+            if (values.id == null) {
+                $.post("/machine/server/add", values, function (data) {
+                    console.log(data); // John
+                    row.delete();
+                });
+
+            } else {
+                $.post("/machine/server/update", values, function (data) {
+                    console.log(data); // John
+                    row.delete();
+                });
+            }
+          $modal.modal('hide');
+        });
+    });
+
+    // jQuery(function($){
+    //     var $modal = $('#editor-modal'),
+    //         $editor = $('#editor'),
+    //         $editorTitle = $('#editor-title'),
+    //         ft = FooTable.init('#editing-example', {
+    //             editing: {
+    //                 enabled: true,
+    //                 addRow: function(){
+    //                     $modal.removeData('row');
+    //                     $editor[0].reset();
+    //                     $editorTitle.text('Add a new row');
+    //                     $modal.modal('show');
+    //                 },
+    //                 editRow: function(row){
+    //                     var values = row.val();
+    //                     $editor.find('#id').val(values.id);
+    //                     $editor.find('#firstName').val(values.firstName);
+    //                     $editor.find('#lastName').val(values.lastName);
+    //                     $editor.find('#jobTitle').val(values.jobTitle);
+    //                     $editor.find('#startedOn').val(values.startedOn.format('YYYY-MM-DD'));
+    //                     $editor.find('#dob').val(values.dob.format('YYYY-MM-DD'));
+    //
+    //                     $modal.data('row', row);
+    //                     $editorTitle.text('Edit row #' + values.id);
+    //                     $modal.modal('show');
+    //                 },
+    //                 deleteRow: function(row){
+    //                     if (confirm('Are you sure you want to delete the row?')){
+    //                         row.delete();
+    //                     }
+    //                 }
+    //             }
+    //         }),
+    //         uid = 10;
+    //
+    //     $editor.on('submit', function(e){
+    //         if (this.checkValidity && !this.checkValidity()) return;
+    //         e.preventDefault();
+    //         var row = $modal.data('row'),
+    //             values = {
+    //                 id: $editor.find('#id').val(),
+    //                 firstName: $editor.find('#firstName').val(),
+    //                 lastName: $editor.find('#lastName').val(),
+    //                 jobTitle: $editor.find('#jobTitle').val(),
+    //                 startedOn: moment($editor.find('#startedOn').val(), 'YYYY-MM-DD'),
+    //                 dob: moment($editor.find('#dob').val(), 'YYYY-MM-DD')
+    //             };
+    //
+    //         if (row instanceof FooTable.Row){
+    //             row.val(values);
+    //         } else {
+    //             values.id = uid++;
+    //             ft.rows.add(values);
+    //         }
+    //         $modal.modal('hide');
+    //     });
+    // });
+
+
+</script>
+
+
+</body>
+
+</html>
