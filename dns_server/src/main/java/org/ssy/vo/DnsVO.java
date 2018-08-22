@@ -5,6 +5,9 @@ package org.ssy.vo;
  */
 public class DnsVO {
 
+
+  private Integer id;
+
   private String dnsType;//dns类型，如 A,NX
 
   private String domainPrefix;//域名前缀
@@ -53,5 +56,13 @@ public class DnsVO {
 
   public void setDnsStatus(Integer dnsStatus) {
     this.dnsStatus = dnsStatus;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 }

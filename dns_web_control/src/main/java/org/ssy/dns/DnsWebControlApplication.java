@@ -21,9 +21,9 @@ public class DnsWebControlApplication {
 
 
   public static void main(String args[]) {
-
     //设置第一个dnsvo的基础信息
     DnsVO dnsVO = new DnsVO();
+    dnsVO.setId(1);
     dnsVO.setDnsStatus(0);
     dnsVO.setDnsType("A");
     dnsVO.setDomainIps("192.168.1.100");

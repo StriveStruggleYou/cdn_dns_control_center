@@ -9,6 +9,7 @@ import org.springframework.util.ReflectionUtils.FieldCallback;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.ssy.share.CommonUtil;
 import org.ssy.vo.DnsVO;
 import org.ssy.vo.TableColumn;
 
@@ -27,13 +28,28 @@ public class DnsController {
 
   @RequestMapping("/add")
   @ResponseBody
-  public Object addDns() {
+  public Object addDns(DnsVO dnsVO) {
+    //字段类型校验
+    int size = CommonUtil.dns.size();
+    String key = dnsVO.getDomainPrefix() + ".yidaren.top";
+    dnsVO.setId(size + 1);
+    CommonUtil.dns.put(key, dnsVO);
     return "success";
   }
 
   @RequestMapping("/edit")
   @ResponseBody
-  public Object editDns() {
+  public Object editDns(DnsVO dnsVO) {
+    //字段类型校验
+    String key = dnsVO.getDomainPrefix() + ".yidaren.top";
+    if (CommonUtil.getDnsInfo(key) == null) {
+      int size = CommonUtil.dns.size();
+//      String key = dnsVO.getDomainPrefix() + ".yidaren.top";
+      dnsVO.setId(size + 1);
+      CommonUtil.dns.put(key, dnsVO);
+    } else {
+      CommonUtil.dns.put(key, dnsVO);
+    }
     return "success";
   }
 
@@ -48,13 +64,17 @@ public class DnsController {
   public Object rows_json(@RequestParam(defaultValue = "0") Integer page,
       @RequestParam(defaultValue = "0") Integer size) {
     List<DnsVO> list = new ArrayList<>();
-    DnsVO dnsVO = new DnsVO();
-    dnsVO.setDnsStatus(0);
-    dnsVO.setDnsType("A");
-    dnsVO.setDomainIps("192.168.1.100");
-    dnsVO.setDomainPrefix("*.server");
-    dnsVO.setTtlValue(360);
-    list.add(dnsVO);
+    for (String strKey : CommonUtil.dns.keySet()) {
+      list.add(CommonUtil.dns.get(strKey));
+    }
+//    CommonUtil.dns.size()
+//    DnsVO dnsVO = new DnsVO();
+//    dnsVO.setDnsStatus(0);
+//    dnsVO.setDnsType("A");
+//    dnsVO.setDomainIps("192.168.1.100");
+//    dnsVO.setDomainPrefix("*.server");
+//    dnsVO.setTtlValue(360);
+//    list.add(dnsVO);
     return list;
   }
 

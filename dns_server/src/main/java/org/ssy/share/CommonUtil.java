@@ -14,5 +14,4 @@ public class CommonUtil {
   public static DnsVO getDnsInfo(String dnsName) {
     return dns.get(dnsName);
   }
-
 }

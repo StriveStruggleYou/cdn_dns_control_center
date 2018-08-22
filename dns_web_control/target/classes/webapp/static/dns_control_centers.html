@@ -64,38 +64,41 @@
       <div class="modal-body">
         <input type="number" id="id" name="id" class="hidden"/>
         <div class="form-group required">
-          <label for="msType" class="col-sm-3 control-label">机器类型</label>
+          <label for="dnsType" class="col-sm-3 control-label">DNS类型</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="msType" name="msType"
-                   placeholder="机器类型" required>
+            <input type="text" class="form-control" id="dnsType" name="dnsType"
+                   placeholder="DNS类型" required>
           </div>
         </div>
         <div class="form-group required">
-          <label for="msName" class="col-sm-3 control-label">机器名称</label>
+          <label for="domainPrefix" class="col-sm-3 control-label">域名前缀</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="msName" name="msName"
-                   placeholder="Last Name" required>
+            <input type="text" class="form-control" id="domainPrefix" name="domainPrefix"
+                   placeholder="域名前缀" required>
           </div>
         </div>
-        <div class="form-group">
-          <label for="msDesc" class="col-sm-3 control-label">机器描述</label>
-          <div class="col-sm-9">
-            <input type="text" class="form-control" id="msDesc" name="msDesc"
-                   placeholder="机器描述">
-          </div>
-        </div>
+
         <div class="form-group required">
-          <label for="msIntranetList" class="col-sm-3 control-label">内网IP列表</label>
+          <label for="domainIps" class="col-sm-3 control-label">域名对应IP</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="msIntranetList" name="msIntranetList"
+            <input type="text" class="form-control" id="domainIps" name="domainIps"
                    placeholder="Started On" required>
           </div>
         </div>
+
         <div class="form-group">
-          <label for="msOuternetList" class="col-sm-3 control-label">外网IP列表</label>
+          <label for="ttlValue" class="col-sm-3 control-label">TTL值</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="msOuternetList" name="msOuternetList"
-                   placeholder="Date of Birth">
+            <input type="text" class="form-control" id="ttlValue" name="ttlValue"
+                   placeholder="TTL值">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dnsStatus" class="col-sm-3 control-label">DNS状态</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="dnsStatus" name="dnsStatus"
+                   placeholder="DNS状态">
           </div>
         </div>
       </div>
@@ -146,9 +149,11 @@
         editRow: function (row) {
           var values = row.val();
           $editor.find('#id').val(values.id);
-          $editor.find('#msType').val(values.msType);
-          $editor.find('#msName').val(values.msName);
-          $editor.find('#msDesc').val(values.msDesc);
+          $editor.find('#dnsType').val(values.dnsType);
+          $editor.find('#domainPrefix').val(values.domainPrefix);
+          $editor.find('#domainIps').val(values.domainIps);
+          $editor.find('#ttlValue').val(values.ttlValue);
+          $editor.find('#dnsStatus').val(values.dnsStatus);
           $modal.data('row', row);
           $editorTitle.text('Edit row #' + values.id);
           $modal.modal('show');
@@ -167,19 +172,21 @@
       var row = $modal.data('row');
       var values = {
         id: $editor.find('#id').val(),
-        msType: $editor.find('#msType').val(),
-        msName: $editor.find('#msName').val(),
-        msDesc: $editor.find('#msDesc').val()
+        dnsType: $editor.find('#dnsType').val(),
+        domainPrefix: $editor.find('#domainPrefix').val(),
+        domainIps: $editor.find('#domainIps').val(),
+        ttlValue: $editor.find('#ttlValue').val(),
+        dnsStatus: $editor.find('#dnsStatus').val()
       };
 
-      if (values.id == null) {
-        $.post("/machine/server/add", values, function (data) {
+      if (values.id == null || values.id == "") {
+        $.post("/dns/add", values, function (data) {
           console.log(data); // John
           row.delete();
         });
 
       } else {
-        $.post("/machine/server/update", values, function (data) {
+        $.post("/dns/edit", values, function (data) {
           console.log(data); // John
           row.delete();
         });
