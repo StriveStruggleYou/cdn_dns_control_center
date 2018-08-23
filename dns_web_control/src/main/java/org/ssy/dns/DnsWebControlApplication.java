@@ -17,7 +17,7 @@ import org.ssy.vo.DnsVO;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class})
 public class DnsWebControlApplication {
 
-  private static Logger log = LoggerFactory.getLogger(DnsServer.class);
+  private static Logger log = LoggerFactory.getLogger(DnsWebControlApplication.class);
 
 
   public static void main(String args[]) {
