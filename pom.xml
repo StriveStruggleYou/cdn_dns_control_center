@@ -15,9 +15,8 @@
   </parent>
 
   <modules>
-    <module>dns_server</module>
     <module>dns_web_control</module>
+    <module>dns_server</module>
   </modules>
-
 
 </project>

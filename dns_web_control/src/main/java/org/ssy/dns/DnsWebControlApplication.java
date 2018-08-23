@@ -27,7 +27,7 @@ public class DnsWebControlApplication {
     dnsVO.setDnsStatus(0);
     dnsVO.setDnsType("A");
     dnsVO.setDomainIps("192.168.1.100");
-    dnsVO.setDomainPrefix("a.server");
+    dnsVO.setDomainPrefix("a");
     dnsVO.setTtlValue(360);
     CommonUtil.dns.put("a.server.yidaren.top", dnsVO);
     //设置第一个dnsvo的基础信息
