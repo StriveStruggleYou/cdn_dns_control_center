@@ -31,7 +31,7 @@ public class DnsController {
   public Object addDns(DnsVO dnsVO) {
     //字段类型校验
     int size = CommonUtil.dns.size();
-    String key = dnsVO.getDomainPrefix() + "server.yidaren.top";
+    String key = dnsVO.getDomainPrefix() + "myshangchen.top";
     dnsVO.setId(size + 1);
     CommonUtil.dns.put(key, dnsVO);
     return "success";
@@ -41,7 +41,7 @@ public class DnsController {
   @ResponseBody
   public Object editDns(DnsVO dnsVO) {
     //字段类型校验
-    String key = dnsVO.getDomainPrefix() + "server.yidaren.top";
+    String key = dnsVO.getDomainPrefix() + "myshangchen.top";
     if (CommonUtil.getDnsInfo(key) == null) {
       int size = CommonUtil.dns.size();
 //      String key = dnsVO.getDomainPrefix() + ".yidaren.top";

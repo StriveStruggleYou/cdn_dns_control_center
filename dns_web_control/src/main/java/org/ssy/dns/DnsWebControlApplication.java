@@ -26,10 +26,10 @@ public class DnsWebControlApplication {
     dnsVO.setId(1);
     dnsVO.setDnsStatus(0);
     dnsVO.setDnsType("A");
-    dnsVO.setDomainIps("192.168.1.100");
+    dnsVO.setDomainIps("115.159.85.150");
     dnsVO.setDomainPrefix("a");
     dnsVO.setTtlValue(360);
-    CommonUtil.dns.put("a.server.yidaren.top", dnsVO);
+    CommonUtil.dns.put("a.myshangchen.top", dnsVO);
     //设置第一个dnsvo的基础信息
 
     DnsThread dnsThread = null;
