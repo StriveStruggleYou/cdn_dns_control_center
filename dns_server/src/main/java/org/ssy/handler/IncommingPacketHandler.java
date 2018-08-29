@@ -22,6 +22,7 @@ public class IncommingPacketHandler extends SimpleChannelInboundHandler<Datagram
     System.out.println("Inside incomming packet handler:" + new String(rcvPktBuf));
     //主动释放
 //    ReferenceCountUtil.release(buf);
-    channelHandlerContext.write("");
+    channelHandlerContext.write("nihao");
+    channelHandlerContext.flush();
   }
 }

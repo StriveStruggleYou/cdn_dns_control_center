@@ -32,9 +32,15 @@ public class UdpClient {
     DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 9956);
     try {
       socket.send(packet);
-      System.out.println(buf);
+      System.out.println(new String(buf));
+      byte[] receiveData = new byte[512];
+      DatagramPacket receivePacket = new DatagramPacket(
+          receiveData, receiveData.length);
+      socket.receive(receivePacket);
+      System.out.println(new String(receiveData));
     } catch (IOException e) {
       e.printStackTrace();
     }
+
   }
 }
