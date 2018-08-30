@@ -31,7 +31,7 @@ public class NettyDnsServer {
             @Override
             public void initChannel(final NioDatagramChannel ch) throws Exception {
               ChannelPipeline p = ch.pipeline();
-              p.addLast(new OutDnsHandler());
+//              p.addLast(new OutDnsHandler());
               p.addLast(new IncommingPacketHandler());
             }
           });

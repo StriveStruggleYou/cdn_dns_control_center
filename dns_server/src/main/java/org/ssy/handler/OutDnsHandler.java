@@ -1,8 +1,11 @@
 package org.ssy.handler;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
+import io.netty.channel.socket.DatagramPacket;
+import io.netty.util.CharsetUtil;
 import org.ssy.vo.DnsVO;
 
 /**
@@ -17,8 +20,12 @@ public class OutDnsHandler extends ChannelOutboundHandlerAdapter {
 //    super.write();
 //    super.write("nihao");
 
-    System.out.println(msg);
-    ctx.write("nihao");
+//    System.out.println(msg);
+//    ctx.write("nihao");
+//
+//    ctx.write(new DatagramPacket(
+//        Unpooled.copiedBuffer("QOTM: " + "Got UDP Message!" , CharsetUtil.UTF_8), ctx.sender()));
+
 
     ctx.flush();
 
