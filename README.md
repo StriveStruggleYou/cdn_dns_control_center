@@ -9,3 +9,11 @@
 ## 3. 接管制定域名解析到自己DNS服务器
 
 ## 4. 读取相关域名对应的IP
+
+---------
+
+## 项目启动方式
+
+## 1. git clone https://github.com/StriveStruggleYou/cdn_dns_control_center.git
+
+## 2. 进入项目目录  sh start.sh
