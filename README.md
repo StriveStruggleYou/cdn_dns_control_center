@@ -19,3 +19,4 @@
 ## 2. 进入项目目录  sh start.sh
 
 ## 3. 访问项目的页面 127.0.0.1:8080 的首页
+![](https://github.com/StriveStruggleYou/cdn_dns_control_center/blob/master/img/eb24c46c-ccb3-4629-8030-3454efb0f72d.png)
