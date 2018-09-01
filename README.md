@@ -17,3 +17,5 @@
 ## 1. git clone https://github.com/StriveStruggleYou/cdn_dns_control_center.git
 
 ## 2. 进入项目目录  sh start.sh
+
+## 3. 访问项目的页面 127.0.0.1:8080 的首页
