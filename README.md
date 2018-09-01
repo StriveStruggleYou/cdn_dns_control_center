@@ -23,3 +23,7 @@
 
 ## 4. 新增一个DNS解析
 ![](https://github.com/StriveStruggleYou/cdn_dns_control_center/blob/master/img/2a21d2b9-7f69-4632-904d-954236799d39.png)
+
+## 5. 编辑一个原有的DNS解析
+![](https://github.com/StriveStruggleYou/cdn_dns_control_center/blob/master/img/dcfecfc8-9480-4bf5-a263-07013c7d0dcf.png)
+
